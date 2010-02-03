@@ -112,6 +112,9 @@ namespace :db do
             DevelopmentModelClass.connection.execute("INSERT INTO #{DevelopmentModelClass.connection.quote_table_name(table_name)} (#{cols}) VALUES #{values.join(',')}")
           end
         end
+        if DevelopmentModelClass.connection.respond_to?(:reset_pk_sequence!)
+          DevelopmentModelClass.connection.reset_pk_sequence!(table_name)
+        end
         print "#{count} records converted\n"
       end
     end
