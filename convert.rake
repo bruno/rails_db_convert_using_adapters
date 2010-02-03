@@ -91,19 +91,25 @@ namespace :db do
         print "Converting #{table_name}..."; STDOUT.flush
         # First, delete any old dev data
         DevelopmentModelClass.delete_all
+
+        cols = nil
+
         while ((models = ProductionModelClass.find(:all, 
             :offset=>offset, :limit=>PAGE_SIZE)).size > 0)
 
           count += models.size
           offset += PAGE_SIZE
+          values = []
+
 
           # Now, write out the prod data to the dev db
           DevelopmentModelClass.transaction do
             models.each do |model|
-              new_model = DevelopmentModelClass.new(model.attributes)
-              new_model.id = model.id
-              new_model.save(false)
+              attrs = model.attributes
+              cols ||= attrs.keys.map{|key| DevelopmentModelClass.connection.quote_column_name(key)}.join(',')
+              values << '(' + attrs.values.map{|value| DevelopmentModelClass.connection.quote(value)}.join(',') + ')'
             end
+            DevelopmentModelClass.connection.execute("INSERT INTO #{DevelopmentModelClass.connection.quote_table_name(table_name)} (#{cols}) VALUES #{values.join(',')}")
           end
         end
         print "#{count} records converted\n"
