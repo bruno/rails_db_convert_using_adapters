@@ -19,6 +19,7 @@
 #
 # For further instructions see 
 #    http://myutil.com/2008/8/31/rake-task-transfer-rails-database-mysql-to-postgres
+#    http://vermicel.li/blog/2010/02/04/converting-a-rails-database-from-mysql-to-postgresql.html
 #
 # The master repository for this script is at github:
 #    http://github.com/face/rails_db_convert_using_adapters/tree/master
@@ -27,9 +28,15 @@
 #         Matson Systems, Inc.
 #         http://www.matsonsystems.com
 #
+# Modifications: Mike Castleman
+#                Roasted Vermicelli LLC
+#                http://vermicel.li/
+#
 # This rake task is released under this BSD license:
 #
-# Copyright (c) 2008, Matson Systems, Inc. All rights reserved.
+# Copyright (c) 2008, Matson Systems, Inc.
+# Copyright (c) 2010, Roasted Vermicelli LLC.
+# All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
